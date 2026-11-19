@@ -301,3 +301,34 @@ aside .brand{font-style:italic;font-weight:800;letter-spacing:.3px;background:li
 .lgo{width:112px;height:112px;margin-bottom:20px}
 .lgl h1,.lgl .brand{font-size:38px}
 }
+
+/* phone: account forms and subject checkboxes */
+.chk:not(.sw) input[type=checkbox],.row input[type=checkbox]{width:auto;flex:none;margin:0}
+.sw input:checked{background:var(--azure)}
+@media(max-width:760px){
+.chk{text-align:left}
+.card .row[style*="flex-end"]>*{flex:1 1 100%}
+.card .row[style*="flex-end"] .pb{width:100%}
+.row select{max-width:100%}
+.tw table td select{width:100%;min-width:160px}
+.tw table.asg{min-width:0}
+.asg tr:first-child{display:none}
+.asg tr{display:block;padding:10px 0;border-bottom:1px solid var(--line)}
+.asg td{display:block;border:0;padding:3px 0}
+.asg td select{width:100%}
+}
+
+/* add-teacher card: neat subject list with the current teacher in a tag */
+.ts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));align-items:start;gap:20px 28px}
+.ts-col{flex:1 1 340px;min-width:0}
+.ts-h{display:block;margin:6px 0 10px;font-size:15px;color:var(--pine)}
+.chk.ts-row{display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:4px 12px;width:100%;margin:0 0 8px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;transition:border-color .15s,background .15s}
+.chk.ts-row:hover{background:#f4f7ff}
+.chk.ts-row:has(input:checked){border-color:var(--azure);background:#eef4ff}
+.ts-n{font-size:14px;line-height:1.35}
+.ts-n .code{margin-right:8px}
+.ts-t{font-size:12px;font-weight:600;color:#1d4fd8;background:#e4ecff;border-radius:99px;padding:3px 11px;white-space:nowrap}
+@media(max-width:760px){
+.chk.ts-row{grid-template-columns:20px minmax(0,1fr)}
+.ts-t{grid-column:2;justify-self:start}
+}

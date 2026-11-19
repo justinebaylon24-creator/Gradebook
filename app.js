@@ -1,6 +1,6 @@
 /* Login, page shell, and button actions */
 /* ---------- login ---------- */
-function lgl(){return `<section class="lgl"><div class="lgt"><div class="lgo" role="img" aria-label="Gateways Institute of Science and Technology logo"></div><h1 class="brand">Gradebook</h1><p>Check your grades online. No trip to the registrar and no signatures needed for routine questions.</p><div class="lgs">Gateways Institute of Science and Technology<br>Antipolo City, Rizal</div></div><div class="lgb" role="img" aria-label="GIST Cogeo campus building"></div></section>`}
+function lgl(){return `<section class="lgl"><div class="lgt"><div class="lgo" role="img" aria-label="TechTonic logo"></div><h1 class="brand">Gradebook</h1><p>Check your grades online. No trip to the registrar and no signatures needed for routine questions.</p></div><div class="lgb" role="img" aria-hidden="true"></div></section>`}
 function login(){
  $('app').innerHTML=`<div class="lg">${lgl()}
  <form class="lgr" onsubmit="return doLogin(event)"><div class="wl"><small>WELCOME BACK</small><h2>Sign in to Gradebook</h2><p>Use the ID and password from your school.</p></div>
