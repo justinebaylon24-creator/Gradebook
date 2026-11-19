@@ -31,7 +31,7 @@ const K=(s,c,m,p)=>[s,c,m,p].join('|');
 const $=i=>document.getElementById(i);
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const nm=id=>U.find(u=>u.id===id).name;
-const tn=k=>U.find(u=>u.key===k).name;
+const tn=k=>{const u=U.find(u=>u.key===k);return u?u.name:'Unassigned'};
 const subsOf=c=>Object.keys(SUB).filter(k=>SUB[k][2]===c);
 const stuOf=c=>STU.filter(s=>s.course===SUB[c][2]);
 const rcs=c=>stuOf(c).map(s=>`<label class="chk"><input type="checkbox" class="rc" value="${s.id}"> ${s.name}</label>`).join('');
@@ -47,6 +47,7 @@ function seed(){const g={};let n=7;
 let S;try{S=JSON.parse(localStorage.getItem('ogs2'))}catch(e){}
 if(!S)S=seed();
 S.acc=S.acc||[];S.pw=S.pw||{};S.must=S.must||{};S.acc.forEach(u=>U.push(u));S.del=S.del||[];for(let i=U.length-1;i>=0;i--)if(S.del.includes(U[i].id))U.splice(i,1);STU=U.filter(u=>u.role==='student');
+S.asg=S.asg||{};Object.keys(S.asg).forEach(c=>{if(SUB[c])SUB[c][1]=S.asg[c]});
 function save(){try{localStorage.setItem('ogs2',JSON.stringify(S))}catch(e){}}
 function toast(t){const e=$('toast');e.textContent=t;e.className='on';clearTimeout(toast.t);toast.t=setTimeout(()=>e.className='',2600)}
 

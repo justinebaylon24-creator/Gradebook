@@ -57,7 +57,8 @@ function render(){
  $('app').innerHTML=`<div class="shell"><aside><div class="brand"><span class="sbl"></span>Gradebook</div>
  <div class="nvs">${NAV[me.role].map(n=>`<button class="nv ${view===n[0]?'on':''}" onclick="go('${n[0]}')">${n[1]}</button>`).join('')}</div>
  <div class="me"><div class="av">${esc(me.name.replace(/^(Mr|Ms|Mrs|Dr)\.\s*/,'').split(' ').map(w=>w[0]).slice(0,2).join(''))}</div>${esc(me.name)}<br>${me.id}<br><button onclick="me=null;render()">Log out</button></div></aside>
- <main>${V[me.role][view]()}</main></div>`}
+ <main>${me.role==='teacher'&&!mySubs().length?noCls():V[me.role][view]()}</main></div>`}
+function noCls(){return `<h1>Welcome, ${esc(me.name)}</h1><div class="card"><h2>No classes assigned yet</h2><p class="sub">The administrator has not assigned any subject to your account yet. Please contact the Admin office, then sign in again.</p></div>`}
 
 /* ---------- actions ---------- */
 function setCC(c){cc=c;render()}
@@ -93,6 +94,13 @@ function addAcc(){const id=$('ai').value.trim(),n=$('an').value.trim();
  if(U.some(u=>u.id.toLowerCase()===id.toLowerCase())){toast('That ID already exists.');return}
  const c=$('ac').value,t=tn(Object.values(SUB).find(s=>s[2]===c)[1]),u={id,name:n,role:'student',pw:'',course:c};
  S.acc.push(u);U.push(u);STU=U.filter(x=>x.role==='student');S.must[id]=1;tmp={id,n,t};save();render()}
+function addTch(){const id=$('ti').value.trim(),n=$('tnm').value.trim();
+ if(!id||!n){toast('Enter the teacher ID and full name.');return}
+ if(U.some(u=>u.id.toLowerCase()===id.toLowerCase())){toast('That ID already exists.');return}
+ const key='t'+Date.now().toString(36),sel=[...document.querySelectorAll('.ts:checked')].map(i=>i.value),u={id,name:n,role:'teacher',pw:'',key};
+ S.acc.push(u);U.push(u);S.must[id]=1;sel.forEach(c=>{SUB[c][1]=key;S.asg[c]=key});
+ tmp={id,n,t:sel.length?sel.length+' subject'+(sel.length>1?'s':'')+' assigned':'No subjects assigned yet',tch:1};save();render()}
+function assign(c,k){SUB[c][1]=k;S.asg[c]=k;save();toast(SUB[c][3]+(k?' assigned to '+tn(k)+'.':' is now unassigned.'));render()}
 function resetPw(id){delete S.pw[id];S.must[id]=1;tmp={id,n:nm(id),reset:1};om=null;save();render()}
 
 function delAcc(id){om=null;const u=U.find(x=>x.id===id);if(!u)return render();
